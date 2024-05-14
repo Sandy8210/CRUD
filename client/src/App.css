@@ -57,12 +57,12 @@ button:hover {
 }
 
 body {
-  background-color: #f5f6ff;
+  background-color: #333;
 }
 
 .container {
   padding: 10px;
-  max-width: 700px;
+  max-width: fit-content;
   margin: 50px auto;
 }
 
@@ -127,4 +127,45 @@ body {
     border: 1px solid #000;
     cursor: pointer;
   }
+}
+
+.tableContainer {
+  margin-top: 50px;
+  box-shadow: 1px 1px 1px 10px rgba(255, 255, 255, 0.7);
+  border-radius: 10px;
+  overflow: hidden;
+  padding: 10px;
+  background-color: #fff;
+}
+
+.tableContainer table thead tr {
+  background-color: #9b8e8e;
+}
+
+.tableContainer table thead th,
+.tableContainer table tbody td {
+  min-width: 200px;
+  padding: 5px;
+  text-align: center;
+}
+
+.tableContainer table tbody td {
+  border-bottom: 2px solid #c9c5c2;
+}
+
+.btn-edit,
+.btn-delete {
+  font-size: 16px;
+  padding: 5px 10px;
+  margin: 0px 10px;
+  color: rgb(81, 36, 215);
+  background-color: transparent;
+}
+
+.btn-delete {
+  color: red;
+}
+
+p {
+  text-align: center;
 }
