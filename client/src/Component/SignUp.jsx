@@ -2,6 +2,7 @@ import { RiDeleteBack2Fill, RiEdit2Fill } from "react-icons/ri";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import FormData from "./FormData";
+import UpdateForm from "./UpdateForm";
 
 axios.defaults.baseURL = "http://localhost:8080/";
 
@@ -11,6 +12,7 @@ const SignUp = () => {
   const [Edit, setEditData] = useState({});
   const [dataList, setDataList] = useState([]);
   const [updatedData, setUpdateData] = useState(false);
+  const [id, setId] = useState(null);
 
   const handleChange = (e) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -26,15 +28,6 @@ const SignUp = () => {
 
   const handleUpdateCLose = () => {
     setUpdateData(false);
-  };
-
-  const handleEditChange = (e) => {
-    setEditData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-  };
-
-  const handleEdit = (x) => {
-    setUpdateData(true);
-    setEditData(x);
   };
 
   const handleSubmit = async (e) => {
@@ -69,15 +62,24 @@ const SignUp = () => {
     alert(data.data.message);
   };
 
-  const handleUpdate = async (e, id) => {
+  const handleEdit = (x) => {
+    setUpdateData(true);
+    setEditData(x);
+    setId(x._id);
+  };
+
+  const handleEditChange = (e) => {
+    setEditData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleUpdate = async (e) => {
     e.preventDefault();
-    console.log(Edit);
-    const data = await axios.put("/update/" + id, { ...Edit });
+    const data = await axios.put("/update/" + id, Edit);
     if (data.data.success) {
-      setUpdateData(false);
-      alert(data.data.message);
       getFetchData();
+      setUpdateData(false);
     }
+    alert(data.data.message);
   };
 
   return (
@@ -100,10 +102,10 @@ const SignUp = () => {
         )}
 
         {updatedData && (
-          <FormData
+          <UpdateForm
             handleChange={handleEditChange}
             handleClose={handleUpdateCLose}
-            handleSubmit={(e) => handleUpdate(e, Edit)}
+            handleSubmit={handleUpdate}
             rest={Edit}
           />
         )}
@@ -131,7 +133,9 @@ const SignUp = () => {
                       <button
                         className="btn btn-edit"
                         // onClick={() => updateData(x._id)}
-                        onClick={() => handleEdit(x)}
+                        onClick={() => {
+                          handleEdit(x);
+                        }}
                       >
                         <RiEdit2Fill />
                       </button>

@@ -67,12 +67,10 @@ app.post("/create", async (req, res) => {
 });
 
 // ! UPDATE DATA --http://localhost:8080/update
-
 app.put("/update/:id", async (req, res) => {
   try {
-    const { id, ...restData } = req.body;
-    console.log("rest values", restData);
-    const data = await userModel.updateOne({ _id: req.params.id }, restData);
+    const id = req.params.id;
+    const data = await userModel.findByIdAndUpdate(id, req.body); // Using extracted id
     res.send({ success: true, message: "data update successful", data: data });
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });
